@@ -1,0 +1,20 @@
+#homepage {
+	background-color: #101010;
+	color: white;
+}
+
+#welcome {
+	font-style: normal;
+	font-family: Lucida Console;
+}
+
+img {
+	float: left;
+	margin-right: 10px;
+	clear: both;
+}
+p {
+	margin-left: 0px;
+	overflow: auto;
+	display: block;
+}
