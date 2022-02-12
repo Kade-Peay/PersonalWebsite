@@ -4,7 +4,7 @@ template.innerHTML = `
     <div class="topnav">
         <a id="home" href="/src/index.html">Home</a>
         <a id="projects" href="/src/projects.html">Projects</a>
-        <a href="https://github.com/ThatOneDude14" target="_blank">GitHub</a>
+        <a id="contact" href="/src/contact.html">Contact Me</a>
     </div>
 `;
 
@@ -16,4 +16,7 @@ if (document.title == "Home Page") {
 }
 if (document.title == "Projects Page") {
 	document.getElementById("projects").classList.add("active");
+}
+if (document.title == "Contact Page") {
+	document.getElementById("contact").classList.add("active");
 }
