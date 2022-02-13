@@ -8,6 +8,10 @@
 	font-family: Lucida Console;
 }
 
+#contactlink {
+	font-size: large;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
 	background-color: #333;

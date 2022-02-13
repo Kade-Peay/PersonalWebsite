@@ -38,3 +38,17 @@ No, at most I would link to the github, otherwise I should just use screenshots 
 ---
 
 Alright I think that's enough for planning. I think I should get into at least creating the index.
+
+# Design
+
+I'm starting this probably later than I should have, I should have been typing out my design plans for a long time yet here we are.
+
+## Projects Page
+
+---
+
+I've decided that the _projects_ page is going to be another directory that will link to individual pages. In each of these I will break down my design and how I did it.
+
+I'd like to also have those code block snippets so that it would be easy to copy and paste the code. Something like you see on Stack Overflow or other coding tutorial websites. I'll investigate their HTML to see how this works.
+
+Okay after some investigation it looks like they're using a "pre" tag and they have the style "position: relative;", I'll investigate what that style is doing. There is also a "div class="open_grepper_editor"", I think that is my grepper extension but I'll see if I have to add that myself.
