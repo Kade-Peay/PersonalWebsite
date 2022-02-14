@@ -5,23 +5,29 @@
 
 #welcome {
 	font-style: normal;
-	font-family: Lucida Console;
+	color: #065cdd;
 }
 
 #contactlink {
 	font-size: large;
 }
 
+#code {
+	background-color: rgb(43, 43, 43);
+	font-family: Lucidia Console;
+	padding: 4px 9px;
+}
+
 /* Add a black background color to the top navigation */
 .topnav {
-	background-color: #333;
+	background-color: #101010;
 	overflow: hidden;
 }
 
 /* Style the links inside the navigation bar */
 .topnav a {
 	float: left;
-	color: #f2f2f2;
+	color: white;
 	text-align: center;
 	padding: 14px 16px;
 	text-decoration: none;
@@ -46,6 +52,7 @@ img {
 	clear: both;
 }
 p {
+	font-size: large;
 	margin-left: 0px;
 	overflow: auto;
 	display: block;

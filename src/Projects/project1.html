@@ -9,8 +9,220 @@
 		<title>Project 1</title>
 	</head>
 	<body id="webpage">
+		<a name="top"></a>
 		<template id="topnav"></template>
 		<h1 id="welcome">Tic Tac Toe</h1>
-		<p></p>
+		<h2>This is a very simple command line tic tac toe game!</h2>
+		<p>Composed of 171 lines of poorly written, weirdly formatted code; it was one of my first projects I did in python.</p>
+		<p>This has no A.I. for the enemy player, is only one player, and works by picking a number between 1 and 9 to choose where to put your 'X'</p>
+		<p>
+			Of course if you'd like to learn more, you are always welcome to check out it's github page here:
+			<a href="https://github.com/Kade-Peay/TicTac" target="_blank">GitHub</a>
+		</p>
+		<h3>How it works</h3>
+		<p>It works in a simple way, start with a 2-dimensional array and print that to the console:</p>
+		<pre id="code" style="width: fit-content"><code>def boardinit():
+	board = [['1', '2', '3'],
+	['4', '5', '6'],
+	['7', '8', '9']]
+	return board
+
+def printBoard(arr):
+	for row in arr:
+		print(row)</code></pre>
+		<p>
+			Now we get to the best bit of code, the function for the players turn. This is just a laundry list of if/elif statements. Each of these
+			correspond to a certain position in the array. It checks if an 'X' or 'O' is in that position, if not, it places the 'X'.
+		</p>
+		<pre id="code" style="width: fit-content"><code># Make this a choice between 1 and 9
+def playerTurn():
+    print("Choose Number between 1 and 9")
+    choice = input("Enter number: ")
+
+    if choice == '1':
+        x = 0
+        y = 0
+    elif choice == '2':
+        x = 0
+        y = 1
+    elif choice == '3':
+        x = 0
+        y = 2
+    elif choice == '4':
+        x = 1
+        y = 0
+    elif choice == '5':
+        x = 1
+        y = 1
+    elif choice == '6':
+        x = 1
+        y = 2
+    elif choice == '7':
+        x = 2
+        y = 0
+    elif choice == '8':
+        x = 2
+        y = 1
+    elif choice == '9':
+        x = 2
+        y = 2
+    else:
+        print('Invalid input')
+
+    if board[x][y] == 'O' or board[x][y] == 'X':
+        print("That spot is taken")
+        playerTurn()
+    else:
+        board[x][y] = 'X'</code></pre>
+		<p>
+			Next function is the computer turn function. This is a very simple and straight forward algorith. As I've stated before, this employs absolutely
+			no A.I. it is just random numbers to pick a position on the board.
+		</p>
+		<pre id="code" style="width: fit-content"><code>def compTurn():
+            x = random.randint(0,2)
+            y = random.randint(0, 2)
+            
+            if board[int(x)][int(y)] != 'X':
+            board[int(x)][int(y)] = 'O' 
+            else: compTurn()
+        </code></pre>
+		<p>
+			<em
+				>* Note that I found a bug that I may or may not have known about when I made this (I'm cutting myself slack seeing as it was 2 years ago)
+				where if there is an 'X' where the computer chooses to put it's 'O' it just doesn't make a move.</em
+			>
+		</p>
+		<p>
+			The worst bit of code is here. This is the function that checks for a winning position. It has 6 checks. It checks the Horizontal, Vertical, and
+			Diagonal for both 'X' (and the odly named) 'Y'
+		</p>
+		<p>
+			I believe I labeled it 'Y' because of the x and y cartesian coordinate system I was using for the game board. In fact this may be why 'O' can't
+			win. Regardless here is how it works:
+		</p>
+		<pre id="code" style="width: fit-content"><code>def check():
+
+    # Horizontal Check of 'X'
+    #----------------------------------------------------------------------------------
+    if board[0][0] == 'X' and board[0][1] == 'X' and board[0][2] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    elif board[1][0] == 'X' and board[1][1] == 'X' and board[1][2] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    elif board[2][0] == 'X' and board[2][1] == 'X' and board[2][2] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    #----------------------------------------------------------------------------------
+
+    # Vertical check of 'X'
+    #----------------------------------------------------------------------------------
+    elif board[0][0] == 'X' and board[1][0] == 'X' and board[2][0] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    elif board[0][1] == 'X' and board[1][1] == 'X' and board[2][1] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    elif board[0][2] == 'X' and board[1][2] == 'X' and board[2][2] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    #----------------------------------------------------------------------------------    
+
+    # Diagonal check of 'X'
+    #---------------------------------------------------------------------------------- 
+    elif board[0][0] == 'X' and board[1][1] == 'X' and board[2][2] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    elif board[2][0] == 'X' and board[1][1] == 'X' and board[0][2] == 'X':
+        print('X wins')
+        printBoard(board)
+        sys.exit()
+    #---------------------------------------------------------------------------------- 
+
+    # Diagonal check of 'Y'
+    #---------------------------------------------------------------------------------- 
+    elif board[0][0] == 'Y' and board[1][1] == 'Y' and board[2][2] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    elif board[2][0] == 'Y' and board[1][1] == 'Y' and board[0][2] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    #---------------------------------------------------------------------------------- 
+
+    # Horizontal Check of 'Y'
+    #----------------------------------------------------------------------------------
+    elif board[0][0] == 'Y' and board[0][1] == 'Y' and board[0][2] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    elif board[1][0] == 'Y' and board[1][1] == 'Y' and board[1][2] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    elif board[2][0] == 'Y' and board[2][1] == 'Y' and board[2][2] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    #----------------------------------------------------------------------------------
+
+    # Vertical check of 'Y'
+    #----------------------------------------------------------------------------------
+    elif board[0][0] == 'Y' and board[1][0] == 'Y' and board[2][0] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    elif board[0][1] == 'Y' and board[1][1] == 'Y' and board[2][1] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    elif board[0][2] == 'Y' and board[1][2] == 'Y' and board[2][2] == 'Y':
+        print('Y wins')
+        printBoard(board)
+        sys.exit()
+    #----------------------------------------------------------------------------------    </code></pre>
+		<p>
+			Being older and wiser, I would probably find a better solution to do this. Or I would realize that this was a project I spent a single day on
+			and finding a smarter way to do this would actually overall be a waste of time.
+		</p>
+		<p>
+			Regardless now we come to the final important piece of the puzzle, and that is the main game "loop." I say "loop" because it actually doesn't
+			loop. Once you win it doesn't start a new game. This would be an easy enough fix, and perhaps I'll do that later when I have more time and
+			drive.
+		</p>
+		<p>
+			It's very straight forward: print who's turn, allow for player or computer input, check if anyone has won, print the board, and do it again.
+		</p>
+		<pre id="code" style="width: fit-content"><code># I am going to use this to loop over the game
+def game():
+    print()
+    print("Your Turn!")
+    playerTurn()
+    check()
+    print("Computer's Turn!")
+    compTurn()
+    check()
+    printBoard(board)
+    print()
+    game()</code></pre>
+		<p>Firstly we have the main function, which just prepares the game board, and prints it initially, and calls the main game loop function.</p>
+		<pre id="code" style="width: fit-content"><code>if __name__ == "__main__":
+    board = boardinit()
+    print()
+    printBoard(board)
+    game()</code></pre>
+		<p>
+			And that's all there is to this very simple game. I was still new when I made it, and maybe once I'm done building this site I will go back and
+			change some of the things that are blatently wrong, and easy to fix.
+		</p>
+		<a href="#top" style="font-size: larger">Back to top of page</a>
 	</body>
 </html>
