@@ -9,8 +9,123 @@
 		<title>Project 1</title>
 	</head>
 	<body id="webpage">
+		<a name="top"></a>
 		<template id="topnav"></template>
 		<h1 id="welcome">Planetary Weather</h1>
-		<p></p>
+		<h2>
+			This is a simple web app that finds the most current weather on Mars using data from Nasa's Curiosity Rover, and the most recent picture from
+			the Rover. Then it also gets the weather for wherever you are, and also using Nasa, gets a sattelite picture of where you are.
+		</h2>
+		<p>
+			This was a fun week long project I did over christmas break. There are quite a few bugs, such as the picture of the users current area doesn't
+			always work.
+		</p>
+		<p>I would link the github page, but it has some api keys in it so it is private, but all of the important code will be shown on this page.</p>
+		<h3>How It Works:</h3>
+		<p>
+			This is a vue app that is largely dependent on JavaScript to manage the DOM, with very little actual HTML doing anything (typical html). The
+			only thing that the HTML does here is a placeholder for the data when it comes through.
+		</p>
+		<p>Because of that fact I'm not going to go over the HTML, because it's not very important, instead let's just go over how the JS works.</p>
+		<p>First we build the Vue app:</p>
+		<pre id="code"><code>const vm = Vue.createApp({</code></pre>
+		<p>Then we instantiate the data that will be needed later:</p>
+		<pre id="code"><code>data() {
+	return {
+		lat: undefined,
+		lon: undefined,
+		city: undefined,
+		state: undefined,
+		country: undefined,
+		today: new Date(),
+		current: undefined,
+		earthPicture: undefined,
+		sol: undefined,
+		marsTemp: undefined,
+		marsPA: undefined,
+		marsWind: undefined,
+		marsSeason: undefined,
+		fUTC: undefined,
+		lUTC: undefined,
+		marsPicture: undefined,
+	};</code></pre>
+		<p>
+			Next we use the "mounted" function is vue, this calls the JS as soon as the DOM is finished loading. From there we use our first fetch and this
+			gets the location information of the user.
+		</p>
+		<pre id="code"><code> mounted() {
+	fetch("https://api.freegeoip.app/json/?apikey=[enter your own api]")
+		.then(response => response.json())
+		.then(json => {
+			this.lat = json.latitude;
+			this.lon = json.longitude;
+			this.state = json.region_name;
+			this.country = json.country_name;
+			this.city = json.city;
+
+			console.log("lat " + this.lat);
+			console.log("lon " + this.lon);
+			return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&appid=[enter your own api]&units=imperial`);
+	})</code></pre>
+		<p>
+			As you can see at the end there is another fetch request. That is because we are using promise chaining to make sure all the data comes in as we
+			want. So the next few segments are going to continue off the last one, bear with me here.
+		</p>
+		<p>The next fetch grabs the current weather data for the users current area:</p>
+		<pre id="code"><code> .then(response => response.json()) 
+	.then(json => {
+		this.current = json;
+
+		return fetch(`https://api.nasa.gov/planetary/earth/imagery?lon=${this.lon}&lat=${this.lat}&dim=0.15&date=2021-01-01&api_key=[enter your own api]`)
+})</code></pre>
+		<p>You may notice that this just adds it to a variable named "current," that's because I'm allowing the HTML to handle which data goes where:</p>
+		<pre id="code"><code>&lt;li&gt;Currently: {{current.main.temp}} F&lt;/li&gt;
+&lt;li&gt;High: {{current.main.temp_max}} F&lt;/li&gt; 
+&lt;li&gt;Low: {{current.main.temp_min}} F&lt;/li&gt;
+&lt;li&gt;{{current.weather[0].description}}&lt;/li&gt;
+&lt;li&gt;{{current.main.humidity}}% humidity&lt;/li&gt;
+&lt;li&gt;{{current.main.pressure}} hPa pressure&lt;/li&gt;</code></pre>
+		<p>So now we have all the current weather for the area, let's get a picture for that area:</p>
+		<pre id="code"><code>.then(response => response.blob())
+	.then(imageBlob => {
+		// Then create a local URL for that image and print it 
+		this.earthPicture = URL.createObjectURL(imageBlob);
+		console.log(this.earthPicture);
+});</code></pre>
+		<p>
+			The only problem with this code is that it is not reliable. It only works some of the time and that's just due to what is available. As well as
+			that most of the pictures are huge, so trying to scale it down doesn't always work great.
+		</p>
+		<p>
+			So our first set of fetch requests is done. This handles only the current weather conditions for the local area of the user. But I also wanted
+			to get the most recent weather data for Mars, and that is it's own set of only 2 fetch requests. Starting with:
+		</p>
+		<pre id="code"><code>fetch("https://api.nasa.gov/insight_weather/?api_key=[enter your own api]&feedtype=json&ver=1.0")
+	.then(response => response.json())
+	.then(json => {
+		// in here is where I need to put the data for mars weather
+		this.sol = json.sol_keys[0];
+		this.marsTemp = json[this.sol].AT.av; // atmospheric temperature, celsius
+		this.marsPA = json[this.sol].PRE.av; // atmospheric pressure, Pascals
+		this.marsWind = json[this.sol].HWS.av; // horizontal wind speed, meters per second
+		this.marsSeason = json[this.sol].Season;
+		this.fUTC = json[this.sol].First_UTC; // first data point of sol
+		this.lUTC = json[this.sol].Last_UTC; // last data point of sol
+
+		return fetch(`https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=${this.sol}&api_key=[enter your own api]`)
+})</code></pre>
+		<p>Then we use our next fetch to grab a picture from the rover:</p>
+		<pre id="code"><code>.then(response => response.json())
+	.then(json => {
+		this.marsPicture = json.photos[0].img_src;
+});</code></pre>
+		<p>To end it all, since we are using vue we have to mount the app:</p>
+		<pre id="code"><code>}).mount("#app");</code></pre>
+		<p>
+			With all that we are done. We have weather data for our current location, and a picture of where we are. We also have Mars' most recent weather
+			data, as well as a picture from the Rover.
+		</p>
+		<p>Of course I didn't share all of the HTML because that seemed exhaustive but it's pretty straight forward how it works.</p>
+		<a href="#top" style="font-size: larger">Back to top of page</a>
 	</body>
 </html>

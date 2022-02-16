@@ -16,6 +16,7 @@
 	background-color: rgb(43, 43, 43);
 	font-family: Lucidia Console;
 	padding: 4px 9px;
+	width: fit-content;
 }
 
 /* Add a black background color to the top navigation */

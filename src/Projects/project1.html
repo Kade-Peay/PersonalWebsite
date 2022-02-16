@@ -16,12 +16,12 @@
 		<p>Composed of 171 lines of poorly written, weirdly formatted code; it was one of my first projects I did in python.</p>
 		<p>This has no A.I. for the enemy player, is only one player, and works by picking a number between 1 and 9 to choose where to put your 'X'</p>
 		<p>
-			Of course if you'd like to learn more, you are always welcome to check out it's github page here:
+			If you'd like to learn more, you are always welcome to check out it's github page here:
 			<a href="https://github.com/Kade-Peay/TicTac" target="_blank">GitHub</a>
 		</p>
-		<h3>How it works</h3>
+		<h3>How It Works:</h3>
 		<p>It works in a simple way, start with a 2-dimensional array and print that to the console:</p>
-		<pre id="code" style="width: fit-content"><code>def boardinit():
+		<pre id="code"><code>def boardinit():
 	board = [['1', '2', '3'],
 	['4', '5', '6'],
 	['7', '8', '9']]
@@ -34,7 +34,7 @@ def printBoard(arr):
 			Now we get to the best bit of code, the function for the players turn. This is just a laundry list of if/elif statements. Each of these
 			correspond to a certain position in the array. It checks if an 'X' or 'O' is in that position, if not, it places the 'X'.
 		</p>
-		<pre id="code" style="width: fit-content"><code># Make this a choice between 1 and 9
+		<pre id="code"><code># Make this a choice between 1 and 9
 def playerTurn():
     print("Choose Number between 1 and 9")
     choice = input("Enter number: ")
@@ -78,7 +78,7 @@ def playerTurn():
 			Next function is the computer turn function. This is a very simple and straight forward algorith. As I've stated before, this employs absolutely
 			no A.I. it is just random numbers to pick a position on the board.
 		</p>
-		<pre id="code" style="width: fit-content"><code>def compTurn():
+		<pre id="code"><code>def compTurn():
             x = random.randint(0,2)
             y = random.randint(0, 2)
             
@@ -100,7 +100,7 @@ def playerTurn():
 			I believe I labeled it 'Y' because of the x and y cartesian coordinate system I was using for the game board. In fact this may be why 'O' can't
 			win. Regardless here is how it works:
 		</p>
-		<pre id="code" style="width: fit-content"><code>def check():
+		<pre id="code"><code>def check():
 
     # Horizontal Check of 'X'
     #----------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ def playerTurn():
 		<p>
 			It's very straight forward: print who's turn, allow for player or computer input, check if anyone has won, print the board, and do it again.
 		</p>
-		<pre id="code" style="width: fit-content"><code># I am going to use this to loop over the game
+		<pre id="code"><code># I am going to use this to loop over the game
 def game():
     print()
     print("Your Turn!")
@@ -214,7 +214,7 @@ def game():
     print()
     game()</code></pre>
 		<p>Firstly we have the main function, which just prepares the game board, and prints it initially, and calls the main game loop function.</p>
-		<pre id="code" style="width: fit-content"><code>if __name__ == "__main__":
+		<pre id="code"><code>if __name__ == "__main__":
     board = boardinit()
     print()
     printBoard(board)
