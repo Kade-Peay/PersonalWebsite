@@ -9,8 +9,80 @@
 		<title>Project 1</title>
 	</head>
 	<body id="webpage">
+		<a name="top"></a>
 		<template id="topnav"></template>
 		<h1 id="welcome">Download Organizer</h1>
-		<p></p>
+		<h2>This is a simple python script that organizes the downloads file on Windows.</h2>
+		<p>
+			If you use windows you know, the downloads folder is terrible. Anything you download from a browser, is just chucked into this folder to die a
+			disorganized death. It bothered me so much, so I wrote this script that moves files into appropriate folders.
+		</p>
+		<p>
+			Now this may not be the most impressive, or sophisticated project I've ever done, but it is my favorite project I've ever done, and I use it
+			very often.
+		</p>
+		<p>
+			If you'd like to learn more, you are always welcome to check out it's github page here:
+			<a href="https://github.com/Kade-Peay/DownloadOrganizer" target="_blank">GitHub</a>
+		</p>
+		<p>
+			How it works is very simple. See what file type it is, move it to a specific folder. I just check the .__contains__ and check if it's .jpg,
+			.exe, etc. But let's step through the project and see the specifics.
+		</p>
+		<br />
+		<p>First let's deal with some imports needed to move the files</p>
+		<pre id="code"><code>#!/usr/bin/env Python3
+import os, shutil</code></pre>
+		<p>Next let's define where the Download folder is, and make an array of the files contained within:</p>
+		<pre id="code"><code>path = 'C:/Users/Kade/Downloads/'
+arr = os.listdir(path)</code></pre>
+		<p>
+			Next we define the folders to move the files to. All but one of these is predefined in Windows, the only one needed is the 'Applications'
+			folder. Of course if you are copying this, make sure to change these:
+		</p>
+		<pre id="code"><code>doc = 'C:/Users/Kade/Documents/'
+pic = 'C:/Users/Kade/Pictures/Saved Pictures/'
+app = 'C:/Users/Kade/Applications/'
+sound = 'C:/Users/Kade/Sound/'
+video = 'C:/Users/Kade/Videos/'</code></pre>
+		<p>Now that the setup is done, we are ready to loop through every file in the Downloads folder:</p>
+		<pre id="code"><code>for file in arr:
+	# this ignores image used in file explorer view
+	if file == 'desktop.ini':
+		pass
+
+	elif file.__contains__('.exe'): # If it is an executable, move it to the applications folder
+		shutil.move(path + file, app + file)
+		print('Moved ' + file + ' to ' + app + '\n')
+
+	elif file.__contains__('.jpg') or file.__contains__('.png') or file.__contains__('.jfif'): # If it is a picture, move to the pictures folder
+		shutil.move(path + file, pic + file)
+		print('Moved ' + file + ' to ' + pic + '\n')
+
+	elif file.__contains__('.doc') or file.__contains__('.pdf') or file.__contains__('pptx'): # If it is a document, move to document folder
+		shutil.move(path + file, doc + file)
+		print('Moved ' + file + ' to ' + doc + '\n')
+
+	elif file.__contains__('.wav') or file.__contains__('.mp3') or file.__contains__('m4a'): # If it is a sound, move to sound folder
+		shutil.move(path + file, sound + file)
+		print('Moved ' + file + ' to ' + sound + '\n')
+	
+	elif file.__contains__('.mp4'):
+		shutil.move(path + file, video + file)
+		print('Moved ' + file + ' to ' + video + '\n')
+
+	else:
+		print('file ' + file + ' is not specified where to move\n')</code></pre>
+		<p>
+			Alright let's break down what this is doing specifically. First we ignore the 'desktop.ini' file. This is a default hidden file, and as such we
+			don't really want to move that. Next we just go through different file types, and every few months if I run into a new file type I add it to the
+			list. Then if it isn't specified we don't move it. This is mostly used for another folder, as it's hard to determine where exactly to put an
+			entire folder.
+		</p>
+		<p>
+			That's all there is. Like I said it's a very simple project, and didn't take me very long to make but I use it all the time to keep my computer
+			organized.
+		</p>
+		<a href="#top" style="font-size: larger">Back to top of page</a>
 	</body>
 </html>
